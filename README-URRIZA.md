@@ -1,3 +1,7 @@
+# ReactSportStore
+
+CTD Digital House - Front-end 3  - Trabajo Parcial - WebSite React de tienda deportiva. Funcionalidad Carrito de compras 
+
 instalacion react shuffle:
 comando: npm install react-shuffle
 
