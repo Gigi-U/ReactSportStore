@@ -1,18 +1,39 @@
-// El componente App es el padre de:
-// - Cabecera
-// - Listado
-// ESTADO: App debe manejar en su estado un número para contabilizar el total de elementos comprados.
-// MÉTODOS: App debe tener un método para aumentar este número y que pueda ser ejecutado por su nieto Item.
-// PROPS: App deberá pasar por props lo necesario a sus componenetes internos.
+import Cabecera from './components/header/Cabecera';
+import Listado from './components/cards/card/Listado.js';
+import Footer from './components/footer/footer.js';
 
-function App() {
+import { useState } from 'react';
+import { createContext } from "react";
+import ReactSwitch from 'react-switch';
+
+export const ThemeContext = createContext(null);
+
+function App () {
+ //seteando el toggle con React-Shuffle
+  const [theme, setTheme]= useState("ligth");
+  const toggleTheme = ()=>{
+    setTheme((actual)=>( actual === "light" ? "dark":"light"))
+  }
+ // seteando en contador de elementos del carrito
+  const [elementosComprados, setElementosComprados] = useState(0);
+  const aumentar = () => {
+    setElementosComprados(elementosComprados + 1);
+  }
 
   return (
-    <div className="App">
-      <Cabecera />
-      <Listado />
+    <ThemeContext.Provider value={{theme, toggleTheme}}>
+      <div className="App" id= {theme}>
+        <Cabecera elementosComprados = {elementosComprados} /> 
+        <div className="switch">
+          <p>Claro/Oscuro</p>  
+          <ReactSwitch onChange ={toggleTheme} checked={theme === "dark"}/> 
+        </div>
+        <Listado aumentar = {aumentar} />
+        <Footer /> 
     </div>
-  );
-}
+    </ThemeContext.Provider>
+  )
+
+};
 
 export default App;
